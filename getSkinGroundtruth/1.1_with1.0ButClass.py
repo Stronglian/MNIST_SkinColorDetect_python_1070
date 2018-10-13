@@ -28,6 +28,7 @@ class ImgGroundTrouthMAKE():
         assert imgIndex < len(self.imgNameList)
         self.imgName = self.imgNameList[imgIndex]
         inputImg_cv = cv2.imread(self.__imgForder__ + self.imgName, 1)
+        print('ReadNewimg', self.imgName)
         rows, cols, d = inputImg_cv.shape
         #縮放
         tempImg = inputImg_cv.copy()
@@ -39,20 +40,21 @@ class ImgGroundTrouthMAKE():
         self.drawArray = np.zeros((self.target_rows, self.target_cols, 1), dtype=np.uint8)
         return
     def MouseCall(self, event, x, y, flags, param):
-        """ 給視窗呼叫 setMouseCallback 用"""
+        """ 給視窗呼叫 setMouseCallback 用
+        左鍵:增加；右鍵:減少；中鍵:填滿"""
         floodMap = param
         if event == cv2.EVENT_LBUTTONDOWN:
             if self.drawing == 0:
                 self.drawing = 1
 #            print('EVENT_LBUTTONDOWN')
-        elif event == cv2.EVENT_LBUTTONUP:
-            if self.drawing == 1:
-                self.drawing = 0
-#            print ('EVENT_LBUTTONUP')
         elif event == cv2.EVENT_RBUTTONDOWN:
             if self.drawing == 0:
                 self.drawing = 2
 #            print('EVENT_RBUTTONDOWN')
+        elif event == cv2.EVENT_LBUTTONUP:
+            if self.drawing == 1:
+                self.drawing = 0
+#            print ('EVENT_LBUTTONUP')
         elif event == cv2.EVENT_RBUTTONUP:
             if self.drawing == 2:
                 self.drawing = 0
@@ -68,12 +70,12 @@ class ImgGroundTrouthMAKE():
                 cv2.floodFill(self.drawArray, floodMap, (x, y), 255)
 #            print('EVENT_MBUTTONDOWN')
         return
-    def DoGroundTruthDrawingHandWork(self):
-        """        """
+    def DoHandWork_GroundTruthDrawing(self):
+        """手繪皮膚"""
         #使用參數
         self.drawing = 0
         self.brush_r = 3
-        showTF = True
+        showTF = True #切換共用
         tempFunc = lambda x : x
         state = 'r' #畫圖狀態
         floodMap =  np.zeros([self.target_rows+2, self.target_cols+2], dtype=np.uint8) #官方要求
@@ -86,15 +88,14 @@ class ImgGroundTrouthMAKE():
             cv2.imshow(self.imgName, tempFunc(tempImg))
             state = cv2.waitKey(1) & 0xFF
             if state == ord('r'): #切換顯示
-                if showTF:
-                    tempImg = self.drawImg
-                    showTF = False
-                else:
-                    tempImg = self.drawArray
-                    showTF = True
+                tempImg = self.drawImg if showTF else self.drawArray
+                showTF = False if showTF else True
                 tempFunc = lambda x : x
             elif state == ord('e'): #合併顯示
-                tempFunc = lambda x : cv2.bitwise_and(self.drawImg, self.drawImg, mask=self.drawArray[:,:,0])
+                tempFunc = (lambda x : cv2.bitwise_and(self.drawImg, self.drawImg, mask=self.drawArray)) \
+                if showTF else (lambda x : x)
+                showTF = False if showTF else True
+                tempImg = self.drawImg
             elif state == ord('w'): #調整筆刷 - 大
                  self.brush_r += 2
             elif state == ord('s'): #調整筆刷 - 小
@@ -103,6 +104,7 @@ class ImgGroundTrouthMAKE():
                      self.brush_r = 1
             elif state == ord('h'): #白布重開
                 self.drawArray = np.zeros((self.target_rows, self.target_cols, 1), dtype=np.uint8)
+                tempImg = self.drawArray
             elif state == ord('q') or state == 27: #ESC #DONE
                 break
         
@@ -116,11 +118,14 @@ class ImgGroundTrouthMAKE():
         cv2.imshow(self.imgName, temp)
         cv2.waitKey(500)
         #cv2.waitKey(500)
-        cv2.destroyAllWindows()
+#        cv2.destroyAllWindows()
         #儲存確認
+        userReson = input('reDo?[Y/N][N]')
+        if userReson in ['Y','y']:
+            return self.DoHandWork_GroundTruthDrawing()
         #轉換輸出
         self.drawArray[self.drawArray == 255] = 1
-#        self.resizeImg
+        cv2.destroyAllWindows()
         return self.resizeImg, self.drawArray
 #%%
 if __name__ == "__main__":
@@ -128,4 +133,4 @@ if __name__ == "__main__":
     imgForder = '../img_org/'
 #    imgNameList = os.listdir(imgForder)
     test = ImgGroundTrouthMAKE(imgForder)
-    x_img, y_groundtruth = test.DoGroundTruthDrawingHandWork()
+    x_img, y_groundtruth = test.DoHandWork_GroundTruthDrawing()

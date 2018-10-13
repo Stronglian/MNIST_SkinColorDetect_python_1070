@@ -99,20 +99,20 @@ while (1):#state != 'q':
 #    print(drawing)
     state = cv2.waitKey(1) & 0xFF
     if state == ord('f'): #切換顯示
-        if showTF:
-            tempImg = drawImg
-            showTF = False
-        else:
-            tempImg = drawArray
-            showTF = True
+        tempImg = drawImg if showTF else drawArray
+        showTF = False if showTF else True
+#        if showTF:
+#            tempImg = drawImg
+#            showTF = False
+#        else:
+#            tempImg = drawArray
+#            showTF = True
         tempFunc = lambda x : x
-        #cv2.imshow(inputImgName, tempImg)
-#        tempImg = drawImg
-#    elif state == ord('d'):
-##        cv2.imshow(inputImgName, drawArray)
-#        tempImg = drawArray
     elif state == ord('e'): #合併顯示
-        tempFunc = lambda x : cv2.bitwise_and(drawImg,drawImg, mask=drawArray)
+        tempFunc = (lambda x : cv2.bitwise_and(drawImg, drawImg, mask=drawArray[:,:,0])) \
+        if showTF else (lambda x : x)
+        showTF = False if showTF else True
+#        tempFunc = lambda x : cv2.bitwise_and(drawImg,drawImg, mask=drawArray)
 #        drawArrayT = drawArray[:,:,0]#.astype(np.uint8)
 #        tempImg = cv2.bitwise_and(drawImg,drawImg, mask=drawArrayT)
     elif state == ord('h'): #白布重開
