@@ -38,7 +38,7 @@ class ImgGroundTrouthMAKE():
         #專用白布
         self.drawImg = self.resizeImg.copy()
         self.drawArray = np.zeros((self.target_rows, self.target_cols, 1), dtype=np.uint8)
-        return
+        return self.imgName
     def MouseCall(self, event, x, y, flags, param):
         """ 給視窗呼叫 setMouseCallback 用
         左鍵:增加；右鍵:減少；中鍵:填滿"""
