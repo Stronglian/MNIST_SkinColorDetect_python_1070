@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 import os
 #from skimage import io, transform, util
-np.set_printoptions(suppress=True)
+#np.set_printoptions(suppress=True)
 #%%
 class ImgGroundTrouthMAKE():
     """ one img first"""
@@ -18,11 +18,9 @@ class ImgGroundTrouthMAKE():
         #先讀一張
         self.imgIndex = imgIndex
         self.ReadNewImg(imgIndex)
-#        #共用參數
-#        self.drawing = 0
         return
     def ReadNewImg(self, imgIndex = None ):
-        """新的影像"""
+        """新的影像。讀取下一張，由外部控制"""
         if not type(imgIndex) == type(0):#imgIndex == None or 
             imgIndex = self.imgIndex
         assert imgIndex < len(self.imgNameList)
@@ -81,7 +79,7 @@ class ImgGroundTrouthMAKE():
         floodMap =  np.zeros([self.target_rows+2, self.target_cols+2], dtype=np.uint8) #官方要求
         #設定視窗
         cv2.namedWindow(self.imgName,  cv2.WINDOW_NORMAL)
-        cv2.resizeWindow(self.imgName, (self.target_cols,self.target_rows))
+        cv2.resizeWindow(self.imgName, (self.target_cols,self.target_rows)) #重調視窗大小
         cv2.setMouseCallback(self.imgName, self.MouseCall, floodMap)
         #主要動作
         tempImg = self.drawImg
@@ -92,7 +90,7 @@ class ImgGroundTrouthMAKE():
                 tempImg = self.drawImg if showTF else self.drawArray
                 showTF = False if showTF else True
                 tempFunc = lambda x : x
-            elif state == ord('e'): #合併顯示
+            elif state == ord('e'): #合併(遮罩)顯示
                 tempFunc = (lambda x : cv2.bitwise_and(self.drawImg, self.drawImg, mask=self.drawArray)) \
                 if showTF else (lambda x : x)
                 showTF = False if showTF else True
@@ -121,7 +119,7 @@ class ImgGroundTrouthMAKE():
         #cv2.waitKey(500)
 #        cv2.destroyAllWindows()
         #儲存確認
-        userReson = input('reDo?[Y/N][N]')
+        userReson = input('continue drawing?[Y/N][N]')
         if userReson in ['Y','y']:
             return self.DoHandWork_GroundTruthDrawing()
         #轉換輸出
