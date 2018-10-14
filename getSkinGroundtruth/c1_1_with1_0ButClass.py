@@ -17,11 +17,11 @@ class ImgGroundTrouthMAKE():
         self.imgNameList = os.listdir(imgForder)
         #先讀一張
         self.imgIndex = imgIndex
-        self.ReadNewimg(imgIndex)
+        self.ReadNewImg(imgIndex)
 #        #共用參數
 #        self.drawing = 0
         return
-    def ReadNewimg(self, imgIndex = None ):
+    def ReadNewImg(self, imgIndex = None ):
         """新的影像"""
         if not type(imgIndex) == type(0):#imgIndex == None or 
             imgIndex = self.imgIndex
@@ -81,6 +81,7 @@ class ImgGroundTrouthMAKE():
         floodMap =  np.zeros([self.target_rows+2, self.target_cols+2], dtype=np.uint8) #官方要求
         #設定視窗
         cv2.namedWindow(self.imgName,  cv2.WINDOW_NORMAL)
+        cv2.resizeWindow(self.imgName, (self.target_cols,self.target_rows))
         cv2.setMouseCallback(self.imgName, self.MouseCall, floodMap)
         #主要動作
         tempImg = self.drawImg
