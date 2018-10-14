@@ -52,12 +52,12 @@ while (1):
     userRespon_save = input('確認儲存?[Y/N][Y]')
     if userRespon_save in ['N', 'n']:
         print(curectImgName, 'NO SAVE')
-#        continue
     else:
         #儲存
         dataDict['x_'].append(x_img.copy())
         dataDict['y_'].append(y_ground.copy())
         dataDict['namespace'].append(curectImgName)
+        print('SAVE', curectImgName)
     #繼續與否
     userRespon_next = input('下一張?[Y/N][Y]')
     if userRespon_next in ['N', 'n']:
@@ -71,6 +71,7 @@ while (1):
 
 #轉存 NPY
 np.save(dataNPY, dataDict)
+print(dataNPY, 'SAVED')
 
 
 
