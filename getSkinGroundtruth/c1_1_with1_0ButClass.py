@@ -15,6 +15,8 @@ class ImgGroundTrouthMAKE():
         #影像庫資訊
         self.__imgForder__ = imgForder
         self.imgNameList = os.listdir(imgForder)
+        #交流
+        print('There are', len(self.imgNameList),'file.')
         #先讀一張
         self.imgIndex = imgIndex
         self.ReadNewImg(imgIndex)
