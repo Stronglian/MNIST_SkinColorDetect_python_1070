@@ -19,7 +19,7 @@ def FindIndex(inputValue, inputList):
 
 #共同參數
 dataNPY = 'dataOrg.npy' #存在哪
-imgForder = '../img_org/' #相片在哪
+imgForder = '../img_org/' #相片在哪個資料夾 #<====記得改
 #讀取過去與否?
 if dataNPY in os.listdir('./') :#and False:
     dataDict = np.load(dataNPY).item()
