@@ -23,7 +23,9 @@ class ImgGroundTrouthMAKE():
         """新的影像。讀取下一張，由外部控制"""
         if not type(imgIndex) == type(0):#imgIndex == None or 
             imgIndex = self.imgIndex
-        assert imgIndex < len(self.imgNameList)
+#        assert imgIndex < len(self.imgNameList)
+        if imgIndex >= len(self.imgNameList): #超過資料夾內img數量，結束
+            return 'DONE'
         self.imgName = self.imgNameList[imgIndex]
         inputImg_cv = cv2.imread(self.__imgForder__ + self.imgName, 1)
         print('ReadNewimg', self.imgName)

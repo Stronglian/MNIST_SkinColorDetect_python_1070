@@ -44,6 +44,9 @@ while (1):
             #換下一張
             test.imgIndex += 1 
             curectImgName = test.ReadNewImg()
+            if curectImgName == 'DONE':
+                print(imgForder, 'is OVER.', 'END off it')
+                break
             continue
     #作畫
     print('do', curectImgName)
@@ -67,6 +70,9 @@ while (1):
         #換下一張
         test.imgIndex += 1 
         curectImgName = test.ReadNewImg()
+        if curectImgName == 'DONE':
+            print(imgForder, 'is OVER.', 'END off it')
+            break
 
 
 #轉存 NPY
