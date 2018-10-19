@@ -36,7 +36,7 @@ if __name__ == "__main__":
     #獲取主資訊，確認比對
     for i in range(len(dataDcit_1['namespace'])):
         imgName = dataDcit_1['namespace'][i]
-        if imgName not in dataDcit_0['namespace']:
+        if imgName in dataDcit_0['namespace']:
             print(imgName, "IN, continue")
             continue
             #或是做 兩者比對

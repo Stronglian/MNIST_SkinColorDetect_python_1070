@@ -10,5 +10,11 @@ dataNPY = 'dataOrg.npy' #存在哪
 
 dataDict = np.load(dataNPY).item()
 
-#轉存 NPY
+#刪除 指定 index
+#index_assign = 6
+#dataDict['x_'].pop(index_assign)
+#dataDict['y_'].pop(index_assign)
+#dataDict['namespace'].pop(index_assign)
+
+##轉存 NPY
 np.save(dataNPY, dataDict)
