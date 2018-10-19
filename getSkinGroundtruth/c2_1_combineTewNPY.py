@@ -5,7 +5,7 @@ Created on Wed Oct 17 18:16:15 2018
 import numpy as np
 import os
 
-def LoadNPY2Var(dataNPY, folderLocal = './'):
+def LoadNPY2Dict(dataNPY, folderLocal = './'):
     assert dataNPY in os.listdir(folderLocal) #and False:
     dataDict = np.load(dataNPY).item()
     return dataDict
@@ -28,8 +28,8 @@ if __name__ == "__main__":
     dataNPY_0 = 'dataOrg.npy' #存在哪
     dataNPY_1 = 'dataOrg - CO.npy' #存在哪
     #讀取
-    dataDcit_0 = LoadNPY2Var(dataNPY_0)
-    dataDcit_1 = LoadNPY2Var(dataNPY_1)
+    dataDcit_0 = LoadNPY2Dict(dataNPY_0)
+    dataDcit_1 = LoadNPY2Dict(dataNPY_1)
     #確認數量
     FormatCheck(dataDcit_0)
     FormatCheck(dataDcit_1)
