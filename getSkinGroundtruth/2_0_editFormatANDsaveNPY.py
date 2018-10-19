@@ -24,7 +24,10 @@ imgForder = '../img_org/' #相片在哪個資料夾 #<====記得改
 if dataNPY in os.listdir('./') :#and False:
     dataDict = np.load(dataNPY).item()
 else:
-    dataDict = {'x_':[],'y_':[],'namespace':[]}
+#    dataDict = {'x_':[],'y_':[],'namespace':[]}
+    dataDict = {}
+    for indexName in ['x_','y_','namespace']:
+        dataDict[indexName] = []
 #讀取 
 test = ImgGroundTrouthMAKE(imgForder)
 curectImgName = test.imgName
@@ -79,30 +82,3 @@ while (1):
 np.save(dataNPY, dataDict)
 print(dataNPY, 'SAVED')
 
-
-
-
-
-
-
-
-
-##共同參數
-#dataNPY = 'dataForInput.npy'
-##讀取過去與否?
-#if dataNPY in os.listdir('./') :#and False:
-#    dataDict = np.load(dataNPY).item()
-#else:
-#    dataDict = {'x_':[],'y_':[],'namespace':[], 'indexMax':[]}
-#    """
-#    x_: patch, size*size
-#    y_: 該patch分為何，[skin, no]    
-#    namesapce:  imgName0,  imgName1, ...
-#    indexMax:  indexMax0, indexMax1, ...
-#    """
-##切分
-#
-##設置 ground truth
-#
-##轉存 NPY
-#np.save(dataNPY, dataDict)
