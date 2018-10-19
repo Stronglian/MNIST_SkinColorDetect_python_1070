@@ -2,6 +2,7 @@
 """
 Created on Fri Oct 19 19:30:44 2018
 #其實應該用計數而非append，之後再改，之後再改
+memory 空間占用問題 要解決
 """
 import numpy as np
 import os
@@ -26,7 +27,7 @@ while(1):
             #命名規則
             if len(outputNPY.split('.')) == 1:
                 outputNPY += '.npy'
-            elif outputNPY.split('.')[-1] not in ['.npy', '.NPY']:
+            elif outputNPY.rsplit('.',1)[-1] not in ['.npy', '.NPY']:
                 outputNPY += '.npy'
             continue
         outputDict = np.load(outputNPY).item()
