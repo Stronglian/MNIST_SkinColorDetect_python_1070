@@ -32,12 +32,13 @@ while(1):
         outputDict = np.load(outputNPY).item()
         break
     else:
-        print('Create new dcit')
+        print('Create new dcit.', dataNPY)
         outputDict = {}
         for indexName in ['x_','y_','namespace', 'indexMax']:
             outputDict[indexName] = []
         break
 nameList = outputDict['namespace']
+np.save(outputNPY, outputDict)
 del outputDict
 #%%
 rows_patch   = 20
