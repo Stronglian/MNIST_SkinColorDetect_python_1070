@@ -6,7 +6,7 @@ memory 空間占用問題 要解決
 """
 import numpy as np
 import os
-from c2_1_combineTewNPY import LoadNPY2Var, FormatCheck
+from c2_1_combineTewNPY import LoadNPY2Dict, FormatCheck
 #%%
 
 
