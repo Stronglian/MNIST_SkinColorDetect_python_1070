@@ -6,7 +6,7 @@ Created on Mon Oct 15 01:49:52 2018
 """
 import numpy as np
 
-dataNPY = 'dataOrg.npy' #存在哪
+dataNPY = './imgPackage/data_img_1015.npy' #存在哪
 
 dataDict = np.load(dataNPY).item()
 

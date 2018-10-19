@@ -18,18 +18,24 @@ def FindIndex(inputValue, inputList):
 #if __name__ == "__main__":
 
 #共同參數
+npyLocal = './' 
+imgForderLocal = '../'
 dataNPY = 'dataOrg.npy' #存在哪
-imgForder = '../img_org/' #相片在哪個資料夾 #<====記得改
+imgForder = 'img_org/' #相片在哪個資料夾 #<====記得改
+npyLocal = './' 
+imgForderLocal = '../'
+#dataNPY = 'data_img_1015.npy' #存在哪
+#imgForder = 'data_img_1015/' #相片在哪個資料夾 #<====記得改
 #讀取過去與否?
-if dataNPY in os.listdir('./') :#and False:
-    dataDict = np.load(dataNPY).item()
+if dataNPY in os.listdir(npyLocal) :#and False:
+    dataDict = np.load(npyLocal + dataNPY).item()
 else:
 #    dataDict = {'x_':[],'y_':[],'namespace':[]}
     dataDict = {}
     for indexName in ['x_','y_','namespace']:
         dataDict[indexName] = []
 #讀取 
-test = ImgGroundTrouthMAKE(imgForder)
+test = ImgGroundTrouthMAKE(imgForderLocal + imgForder)
 curectImgName = test.imgName
 
 while (1):
@@ -79,6 +85,6 @@ while (1):
 
 
 #轉存 NPY
-np.save(dataNPY, dataDict)
+np.save(npyLocal + dataNPY, dataDict)
 print(dataNPY, 'SAVED')
 
