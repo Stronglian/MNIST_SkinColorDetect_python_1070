@@ -5,25 +5,34 @@ Created on Fri Oct 19 19:30:44 2018
 memory 空間占用問題 要解決
 """
 import numpy as np
-import os
+import os#, sys
+from shutil import copyfile
 from c2_1_combineTewNPY import LoadNPY2Dict, FormatCheck
 #%%
-
+def GetNameListAndSaveDelDict(outputDict, outputNPY):
+    listNameList = outputDict['namespace']
+    np.save(outputNPY, outputDict)
+    del outputDict
+    return listNameList
 
 #%%
 #if __name__ == "__main__":
 #共同參數
 dataNPY = "dataOrg.npy" #要轉換的
-outputNPY = "output0_fullCut.npy"
+outputNPY = "output0_"+dataNPY.rsplit(".",1)[0]+"_fullCut.npy"
 #讀取
-dataDict = LoadNPY2Var(dataNPY)
+dataDict = LoadNPY2Dict(dataNPY)
 FormatCheck(dataDict)
 #讀取過去
 while(1):
     if outputNPY in os.listdir('./') :#and False:
         userRespon = input(outputNPY+" is exist, Do you read this?[Y/N][Y]")
         if userRespon in ['N', 'n']:
-            outputNPY = input('Input a new file name:')
+            outputNPY = input('Input a new file name:(EXIT to exit)')
+            if outputNPY == "EXIT":
+                print('BYE')
+#                os._exit(0)#會殘餘空間
+                exit()
             #命名規則
             if len(outputNPY.split('.')) == 1:
                 outputNPY += '.npy'
@@ -33,7 +42,7 @@ while(1):
         outputDict = np.load(outputNPY).item()
         break
     else:
-        print('Create new dcit.', dataNPY)
+        print('Create new dcit.', outputNPY)
         outputDict = {}
         for indexName in ['x_','y_','namespace', 'indexMax']:
             outputDict[indexName] = []
@@ -84,14 +93,15 @@ for n_index, imgName in enumerate(dataDict['namespace']):
     ## 各自的編號
     outputDict['indexMax'].append(patchCount if len(outputDict['indexMax'])==0 else outputDict['indexMax'][-1]+patchCount)
     print(imgName, "Done")
-    print('==')
 #    break
-
 #轉存 NPY
     np.save(outputNPY, outputDict)
     #
     nameList = outputDict['namespace']
     del outputDict
+    print('==')
+#%%
+copyfile(outputNPY, "./DONE/" + outputNPY)#完成就備份
 #%%註解
 ##共同參數
 #dataNPY = 'dataForInput.npy'
