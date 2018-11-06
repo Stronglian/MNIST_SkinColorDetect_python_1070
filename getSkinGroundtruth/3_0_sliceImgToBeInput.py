@@ -8,7 +8,7 @@ memory 空間占用問題 要解決
 import numpy as np
 import os, sys
 from shutil import copyfile
-from c2_1_combineTewNPY import LoadNPY2Dict, FormatCheck
+from c2_1_combine2NewNPY import LoadNPY2Dict, FormatCheck
 #%%
 def GetNameListAndSaveDelDict(outputDict, outputNPY):
     listNameList = outputDict["namespace"]
