@@ -8,7 +8,7 @@ refer:
 import os
 import numpy as np
 from c1_1_with1_0ButClass import ImgGroundTrouthMAKE
-
+#%% 
 def FindIndex(inputValue, inputList):
     for i, value in enumerate(inputList):
         if value == inputValue:
@@ -16,16 +16,17 @@ def FindIndex(inputValue, inputList):
             break
     return outputIndex
 #if __name__ == "__main__":
-
+#%% 
 #共同參數
-npyLocal = './' 
-imgForderLocal = '../'
-dataNPY = 'dataOrg.npy' #存在哪
+npyLocal = './' #NPY 位置
+imgForderLocal = '../' # 影像位置
+dataNPY = 'dataOrg.npy' # NPY存在哪
 imgForder = 'img_org/' #相片在哪個資料夾 #<====記得改
-npyLocal = './' 
-imgForderLocal = '../'
+#npyLocal = './' 
+#imgForderLocal = '../'
 #dataNPY = 'data_img_1015.npy' #存在哪
 #imgForder = 'data_img_1015/' #相片在哪個資料夾 #<====記得改
+#%% 
 #讀取過去與否?
 if dataNPY in os.listdir(npyLocal) :#and False:
     dataDict = np.load(npyLocal + dataNPY).item()
@@ -37,7 +38,7 @@ else:
 #讀取 
 test = ImgGroundTrouthMAKE(imgForderLocal + imgForder)
 curectImgName = test.imgName
-
+#%% 
 while (1):
     print('test', curectImgName)
     if curectImgName in dataDict['namespace']:
@@ -83,7 +84,7 @@ while (1):
             print(imgForder, 'is OVER.', 'END off it')
             break
 
-
+#%% 
 #轉存 NPY
 np.save(npyLocal + dataNPY, dataDict)
 print(dataNPY, 'SAVED')
