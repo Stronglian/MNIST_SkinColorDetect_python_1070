@@ -27,12 +27,11 @@ for i in range(dataAmount):
     #讀取
     imgName = dataDict['namespace'][i]
     orgImg = dataDict['x_'][i]
-    groundtruth = dataDict['y_'][i].copy()
-    groundtruth = groundtruth*255
+    groundtruth = dataDict['y_'][i].copy()*255
     #顯示
-    cv2.imshow("Org_"+imgName, orgImg)
-    cv2.imshow("Mask_"+imgName, groundtruth)
-    cv2.imshow(imgName+"_withMask", maskFunc(orgImg, groundtruth))
+    cv2.imshow("Org_", orgImg)
+    cv2.imshow("Mask_", groundtruth)
+    cv2.imshow("_withMask", maskFunc(orgImg, groundtruth))
     
     #離開
     state = cv2.waitKey(0) & 0xFF
@@ -41,5 +40,6 @@ for i in range(dataAmount):
     
         
     cv2.destroyAllWindows()
+cv2.destroyAllWindows()
     
     
