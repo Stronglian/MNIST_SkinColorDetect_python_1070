@@ -24,7 +24,8 @@ def GetPureName(orgName, nameIndex = 0):
 #共同參數
 outputNPYLocal = "./"
 dataNPY = "dataOrg.npy" #要轉換的
-outputNPY = "output_"+dataNPY.rsplit(".",1)[0]+"_fullCut.npy"
+#outputNPY = "output_"+dataNPY.rsplit(".",1)[0]+"_fullCut.npy"
+outputNPY = "output_"+dataNPY.rsplit(".",1)[0]+"_easyCut.npy"
 
 #boolSplitForder = False
 #intDataInOneNPY = 5
@@ -33,10 +34,10 @@ outputNPY = "output_"+dataNPY.rsplit(".",1)[0]+"_fullCut.npy"
 #讀取 data
 dataDict = LoadNPY2Dict(dataNPY)
 FormatCheck(dataDict)
-#讀取過去
+#讀取過去或是新建檔案
 while(1):
     if (outputNPY in os.listdir(outputNPYLocal)) \
-    or False: 
+    or False: #判斷有編號的切片用
         userRespon = input(outputNPY + " is exist, Do you read this?[Y/N][Y]")
         if userRespon in ["N", "n"]:
             outputNPY = input("Input a new file name:(EXIT to exit)")
@@ -47,7 +48,7 @@ while(1):
             #命名規則
             if len(outputNPY.split(".")) == 1:
                 outputNPY += ".npy"
-            elif outputNPY.rsplit(".",1)[-1] not in [".npy", ".NPY"]:
+            elif outputNPY.rsplit(".",1)[-1] not in ["npy", "NPY"]:
                 outputNPY += ".npy"
             continue
         outputDict = np.load(outputNPYLocal + outputNPY).item()
@@ -83,10 +84,10 @@ for n_index, imgName in enumerate(dataDict["namespace"]):
     y_newPatch = []
     #其實應該用計數而非append，之後再改
     patchCount = 0
-    for y in range(0, rows_img):#, rows_patch): #):#
-        for x in range(0, cols_img):#, cols_patch):
-#    for y in range(0, rows_img, rows_patch):
-#        for x in range(0, cols_img, cols_patch):
+#    for y in range(0, rows_img): # fullCut
+#        for x in range(0, cols_img):
+    for y in range(0, rows_img, rows_patch): # easyCut
+        for x in range(0, cols_img, cols_patch):
             patchTmp_Img = imgOrg[y:y+rows_patch, x:x+cols_patch].copy()
             patchTmp_Truth = groundTruth[y:y+rows_patch, x:x+cols_patch].copy()
             x_newPatch.append(patchTmp_Img)
@@ -126,7 +127,7 @@ print("Copy to", copyfile(outputNPYLocal + outputNPY, "./DONE/" + outputNPY)) #�
 #    dataDict = {"x_":[],"y_":[],"namespace":[], "indexMax":[]}
 #    """
 #    x_: patch, size*size
-#    y_: 該patch分為何，[skin, no]    
+#    y_: 該patch分為何，[ no, skin ]
 #    namesapce:  imgName0,  imgName1, ...
 #    indexMax:  indexMax0, indexMax1, ...
 #    """
