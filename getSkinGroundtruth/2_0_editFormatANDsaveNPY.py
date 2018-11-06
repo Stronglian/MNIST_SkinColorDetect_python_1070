@@ -17,15 +17,16 @@ def FindIndex(inputValue, inputList):
     return outputIndex
 #if __name__ == "__main__":
 
-#共同參數
-npyLocal = './' 
-imgForderLocal = '../'
-dataNPY = 'dataOrg.npy' #存在哪
-imgForder = 'img_org/' #相片在哪個資料夾 #<====記得改
-npyLocal = './' 
-imgForderLocal = '../'
-#dataNPY = 'data_img_1015.npy' #存在哪
-#imgForder = 'data_img_1015/' #相片在哪個資料夾 #<====記得改
+##共同參數
+#npyLocal = './' 
+#imgForderLocal = '../'
+#dataNPY = 'dataOrg.npy' #存在哪
+#imgForder = 'img_org/' #相片在哪個資料夾 #<====記得改
+
+npyLocal = './imgPackage/' 
+imgForderLocal = './imgPackage/'
+dataNPY = 'dataImg-1015.npy' #存在哪
+imgForder = 'dataImg-1015/' #相片在哪個資料夾 #<====記得改
 #讀取過去與否?
 if dataNPY in os.listdir(npyLocal) :#and False:
     dataDict = np.load(npyLocal + dataNPY).item()
